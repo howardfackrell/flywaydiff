@@ -3,6 +3,7 @@ package com.hlf;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.util.StringUtils;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -59,6 +60,9 @@ class Migration {
     final double version;
     final String script;
     public Migration(String version, String script) {
+        if (StringUtils.countOccurrencesOf(version, ".") > 1) {
+            version = version.replace("." , "");
+        }
         this.version = Double.parseDouble(version);
         this.script = script;
     }
